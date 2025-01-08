@@ -1,0 +1,86 @@
+.followers_page {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .followers_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .follower_card {
+    width: 12rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .follower_card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .follower_img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .follower_login {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0.5rem 0;
+  }
+  
+  .follower_type {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  
+  .pagination button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .pagination button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .pagination button.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .pagination button:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  
