@@ -1,15 +1,27 @@
-/* Main container for the repository list */
 .user_list_main {
-    background-color: #f4f4f4; /* Light background for a clean look */
+    background-color: #f4f4f4;
     height: calc(100vh);
     padding: 2rem;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif; /* Modern font for better readability */
+    font-family: 'Roboto', sans-serif;
     color: #333;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    overflow-y: auto;
+}
+.user_details{
+    margin: 0 0;
+}
+.button{
+    margin: 2rem 0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-/* Styling for the list of repositories */
 .repo_list {
     display: flex;
     flex-wrap: wrap;
@@ -17,30 +29,28 @@
     padding: 0;
     margin: 0;
     list-style: none;
-    justify-content: center; /* Center items for better alignment */
+    justify-content: center;
 }
 
-/* Individual repository card */
 .repo_card {
     width: 22rem;
     background-color: #ffffff;
-    border: 1px solid #e0e0e0; /* Light border for minimalism */
+    border: 1px solid #e0e0e0;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Prevent content overflow */
+    overflow: hidden;
 }
 
 .repo_card:hover {
-    transform: translateY(-5px); /* Hover effect for interactivity */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Repository card title */
 .repo_card h2 {
     margin: 0 0 1rem;
-    font-size: 1.5rem; /* Larger title for emphasis */
+    font-size: 1.5rem;
     color: #007bff;
     font-weight: bold;
 }
@@ -54,20 +64,17 @@
     text-decoration: underline;
 }
 
-/* Repository card details */
 .repo_details p {
     margin: 0.5rem 0;
-    font-size: 1rem; /* Standardized font size for better readability */
+    font-size: 1rem;
     color: #555;
 }
 
-/* Fallback for repositories with no description */
 .repo_card p:first-of-type {
     font-style: italic;
     color: #777;
 }
 
-/* Pagination container */
 .pagination {
     display: flex;
     justify-content: center;
@@ -97,26 +104,23 @@
     cursor: not-allowed;
 }
 
-/* Active pagination button */
 .pagination .active {
     background-color: #007bff;
     color: #ffffff;
 }
 
-/* Media query for responsiveness */
 @media (max-width: 768px) {
     .repo_card {
-        width: 100%; /* Full width on smaller screens */
+        width: 100%;
     }
     .repo_list {
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: column;
     }
     .user_list_main {
-        padding: 1rem; /* Reduce padding for smaller screens */
+        padding: 1rem;
     }
 }
 
-/* User profile card */
 .user_card {
     display: flex;
     align-items: center;
@@ -126,19 +130,17 @@
     padding: 1.5rem;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto 2rem; /* Center-align user card */
+    margin: 0 auto 2rem;
 }
 
-/* User avatar styling */
 .avatar_img {
     aspect-ratio: 1;
     border-radius: 50%;
-    width: 6rem; /* Maintain proportional size */
+    width: 6rem;
     margin-right: 1rem;
-    border: 2px solid #007bff; /* Add a subtle border for emphasis */
+    border: 2px solid #007bff;
 }
 
-/* Prevent text overflow */
 .repo_list p {
     overflow: hidden;
     text-overflow: ellipsis;

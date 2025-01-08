@@ -1,27 +1,24 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./followersPage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserFollowers } from "../store/userSlice";
 
 const FollowersPage = () => {
-  const [followersList, setFollowersList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { username } = useParams();
+  const { login } = useParams();
 
-  const followersPerPage = 12;
+  const followersPerPage = 9;
+  const dispatch = useDispatch();
+  const followersList = useSelector(
+    (state) => state.user.cache[login]?.followers || []
+  );
 
   useEffect(() => {
-    const fetchFollowersData = async () => {
-      try {
-        const response = await axios.get(`/api/users/${username}/followers`);
-        setFollowersList(response.data);
-      } catch (error) {
-        console.error("Error fetching followers data:", error);
-      }
-    };
-
-    fetchFollowersData();
-  }, [username]);
+    if (!followersList.length && login) {
+      dispatch(fetchUserFollowers(login));
+    }
+  }, [dispatch, login, followersList]);
 
   const totalPages = Math.ceil(followersList.length / followersPerPage);
 
@@ -38,18 +35,18 @@ const FollowersPage = () => {
 
   return (
     <div className="followers_page">
-      <h1>{username}&apos;s Followers</h1>
+      <h1>{login}&apos;s Followers</h1>
       <ul className="followers_list">
         {currentFollowers.map((follower, indx) => (
           <li key={indx} className="follower_card">
-            <Link to={`/${username}/repos`}>
+            <Link to={`/${follower.login}/repos`}>
               <img
                 src={follower.avatar_url}
                 alt={`${follower.login}'s avatar`}
                 className="follower_img"
               />
               <p className="follower_login">{follower.login}</p>
-              <p className="follower_type">{follower.type}</p>
+              <p className="follower_type">{follower.type || "User"}</p>
             </Link>
           </li>
         ))}

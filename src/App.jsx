@@ -9,9 +9,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UserSearch />} />
-        <Route path="/:username/:repoName" element={<RepoDetails />} />
-        <Route path="/:username/followers" element={<FollowersPage />} />
-        <Route path="/:username/repos" element={<RepositoryList />} />
+        <Route path="/:login/:repoName" element={<RepoDetails />} />
+        <Route path="/:login/followers" element={<FollowersPage />} />
+        <Route path="/:login/repos" element={<RepositoryList />} />
       </Routes>
     </BrowserRouter>
   );

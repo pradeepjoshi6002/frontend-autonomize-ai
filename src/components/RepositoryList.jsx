@@ -1,110 +1,98 @@
 import { useEffect, useState } from "react";
-import "./components.css";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserDetails, fetchUserRepos } from "../store/userSlice";
+import "./repository.css";
 
-const RepositoryList = ({ user }) => {
-  const [repoList, setRepoList] = useState([]);
+const RepositoryList = ({ login: propLogin }) => {
+  const { login: paramLogin } = useParams();
+  const login = propLogin || paramLogin;
+
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedRepos, setPaginatedRepos] = useState([]);
-  const [fetchedUser, setFetchedUser] = useState(null);
 
-  const { username } = useParams();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.cache[login]?.details || {});
+  const repos = useSelector((state) => state.user.cache[login]?.repos || []);
+
+  useEffect(() => {
+    if (!Object.keys(user).length && login) {
+      dispatch(fetchUserDetails(login));
+    }
+    if (!repos.length && login) {
+      dispatch(fetchUserRepos(login));
+    }
+  }, [dispatch, login]);
 
   const reposPerPage = 9;
 
-  const getUser = async () => {
-    try {
-      const { data } = await axios.get(`/api/users/${username}`);
-      setFetchedUser(data);
-    } catch (err) {
-      console.log({ message: err.message });
-    }
-  };
-
-  const getRepos = async () => {
-    try {
-      const userLogin = user?.login || username; // Use user prop or username from params
-      const { data } = await axios.get(`/api/users/${userLogin}/repos`);
-      setRepoList(data);
-      setPaginatedRepos(data.slice(0, reposPerPage)); // Initialize with the first page
-    } catch (err) {
-      console.log({ message: err.message });
-    }
-  };
-
   useEffect(() => {
-    if (!user && username) {
-      getUser();
+    if (repos) {
+      const startIndex = (currentPage - 1) * reposPerPage;
+      const endIndex = startIndex + reposPerPage;
+      setPaginatedRepos(repos.slice(startIndex, endIndex));
     }
-  }, [user, username]);
+  }, [currentPage, repos]);
 
-  useEffect(() => {
-    if (user || fetchedUser) {
-      getRepos();
-    }
-  }, [user, fetchedUser]);
-
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * reposPerPage;
-    const endIndex = startIndex + reposPerPage;
-    setPaginatedRepos(repoList.slice(startIndex, endIndex));
-  }, [currentPage, repoList]);
-
-  const totalPages = Math.ceil(repoList.length / reposPerPage);
+  const totalPages = Math.ceil(repos.length / reposPerPage);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
-
-  const displayUser = user || fetchedUser; // Use either the prop or fetched data
+  const navigate = useNavigate();
 
   return (
     <div className="user_list_main">
-      {displayUser ? (
-        <>
-          <h1>{displayUser.name}'s Repositories</h1>
-          <p>{displayUser.bio}</p>
+      {Object.keys(user).length ? (
+        <div className="user_details">
+          <h1>{user.name}&apos;s Repositories</h1>
+          <p>{user.bio}</p>
           <p>
-            Followers: {displayUser.followers} | Following:{" "}
-            {displayUser.following} | Repos: {repoList.length}
+            Followers: {user.followers} | Following: {user.following} | Repos:{" "}
+            {repos.length}
           </p>
-          <button>
-            <Link to={`/${displayUser.login}/followers`}>followers</Link>
+          <button
+            className="button"
+            onClick={() => navigate({ pathname: `/${user.login}/followers` })}
+          >
+            Followers
           </button>
-        </>
+        </div>
       ) : (
         <p>Loading user details...</p>
       )}
-      <ul className="repo_list">
-        {paginatedRepos.map((repo) => (
-          <li key={repo.id} className="repo_card">
-            <Link to={`/${displayUser?.login || username}/${repo.name}`}>
-              <h2>
-                <a
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <p>{repo.name}</p>
-                </a>
-              </h2>
-              <p>{repo.description || "No description available"}</p>
-              <div className="repo_details">
-                <p>Language: {repo.language || "Not specified"}</p>
-                <p>Stars: ⭐ {repo.stargazers_count}</p>
-                <p>Forks: 🍴 {repo.forks_count}</p>
-                <p>Open Issues: 🐞 {repo.open_issues_count}</p>
-                <p>
-                  Last Updated: {new Date(repo.updated_at).toLocaleDateString()}
-                </p>
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      {repos.length ? (
+        <ul className="repo_list">
+          {paginatedRepos.map((repo) => (
+            <li key={repo.id} className="repo_card">
+              <Link to={`/${user.login}/${repo.name}`}>
+                <h2>
+                  <a
+                    href={repo.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <p>{repo.name}</p>
+                  </a>
+                </h2>
+                <p>{repo.description || "No description available"}</p>
+                <div className="repo_details">
+                  <p>Stars: ⭐ {repo.stargazers_count}</p>
+                  <p>
+                    Last Updated:{" "}
+                    {new Date(repo.updated_at).toLocaleDateString()}
+                  </p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading repositories...</p>
+      )}
       <div className="pagination">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

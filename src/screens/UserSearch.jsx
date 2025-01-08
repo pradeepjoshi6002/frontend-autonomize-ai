@@ -1,29 +1,25 @@
-import { useState } from "react";
 import RepositoryList from "../components/RepositoryList";
-import axios from "axios";
-
-import "./screens.css";
+import { useEffect, useState } from "react";
+import { fetchUserDetails } from "../store/userSlice";
+import "./usersearch.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserSearch = () => {
-  const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const [login, setLogin] = useState("");
+  const user = useSelector((state) => state.user.cache[login]?.details);
 
   const handleSearch = () => {
-    if (username) {
-      getUsers();
+    if (login !== "") {
+      dispatch(fetchUserDetails(login));
     }
   };
 
-  const getUsers = async () => {
-    try {
-      const { data } = await axios.get(`/api/users/${username}`);
-      // https://api.github.com/users/mralexgray
-      console.log(data);
-      setUser(data);
-    } catch (err) {
-      console.log({ errpr: err.message });
+  useEffect(() => {
+    if (user) {
+      console.log("User details fetched:", user);
     }
-  };
+  }, [user]);
 
   return (
     <div className="search_container">
@@ -31,11 +27,13 @@ const UserSearch = () => {
       <input
         type="text"
         placeholder="Enter GitHub username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={login}
+        onChange={(e) => setLogin(e.target.value)}
       />
-      <button onClick={handleSearch}>Search</button>
-      {user && <RepositoryList user={user} />}
+      <button className="search_btn" onClick={handleSearch} disabled={!login}>
+        Search
+      </button>
+      {user && <RepositoryList login={login} />}
     </div>
   );
 };
