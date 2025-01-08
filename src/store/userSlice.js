@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+axios.defaults.baseURL = API_URL;
 
 export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
@@ -8,7 +10,7 @@ export const fetchUserDetails = createAsyncThunk(
     if (state.user.cache[login]?.details) {
       return state.user.cache[login].details;
     }
-    const response = await axios.get(`/api/users/${login}`);
+    const response = await axios.get(`/users/${login}`);
     return { login, data: response.data };
   }
 );
@@ -20,7 +22,7 @@ export const fetchUserRepos = createAsyncThunk(
     if (state.user.cache[login]?.repos) {
       return state.user.cache[login].repos;
     }
-    const response = await axios.get(`/api/users/${login}/repos`);
+    const response = await axios.get(`/users/${login}/repos`);
     return { login, repos: response.data };
   }
 );
@@ -37,7 +39,7 @@ export const fetchRepoDetails = createAsyncThunk(
       return { login, repoName, details: cachedRepo.details };
     }
 
-    const response = await axios.get(`/api/repos/${login}/${repoName}`);
+    const response = await axios.get(`/repos/${login}/${repoName}`);
     return { login, repoName, details: response.data };
   }
 );
@@ -49,7 +51,7 @@ export const fetchUserFollowers = createAsyncThunk(
     if (state.user.cache[login]?.followers) {
       return state.user.cache[login].followers;
     }
-    const response = await axios.get(`/api/users/${login}/followers`);
+    const response = await axios.get(`/users/${login}/followers`);
     return { login, followers: response.data };
   }
 );

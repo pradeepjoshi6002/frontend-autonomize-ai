@@ -5,6 +5,8 @@ import FollowersPage from "./screens/FollowersPage.jsx";
 import RepositoryList from "./components/RepositoryList.jsx";
 
 const App = () => {
+  console.log(import.meta.env.VITE_API_BASE_URL);
+  console.log(import.meta.env.VITE_API_BASE_URL);
   return (
     <BrowserRouter>
       <Routes>
