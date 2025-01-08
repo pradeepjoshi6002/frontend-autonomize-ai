@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_BASE_URL;
-axios.defaults.baseURL = API_URL;
+axios.defaults.baseURL = "https://api.github.com";
 
 export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
