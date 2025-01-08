@@ -68,23 +68,26 @@ const RepositoryList = ({ login: propLogin }) => {
         <ul className="repo_list">
           {paginatedRepos.map((repo) => (
             <li key={repo.id} className="repo_card">
+              <img src={user?.avatar_url} className="avatar_img" alt="" />
               <Link to={`/${user.login}/${repo.name}`}>
-                <h2>
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <p>{repo.name}</p>
-                  </a>
-                </h2>
-                <p>{repo.description || "No description available"}</p>
-                <div className="repo_details">
-                  <p>Stars: ⭐ {repo.stargazers_count}</p>
-                  <p>
-                    Last Updated:{" "}
-                    {new Date(repo.updated_at).toLocaleDateString()}
-                  </p>
+                <div className="details_text">
+                  <h2>
+                    <a
+                      href={repo.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <p>{repo.name}</p>
+                    </a>
+                  </h2>
+                  <p>{repo.description || "No description available"}</p>
+                  <div className="repo_details">
+                    <p>Stars: ⭐ {repo.stargazers_count}</p>
+                    <p>
+                      Last Updated:{" "}
+                      {new Date(repo.updated_at).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
               </Link>
             </li>

@@ -1,6 +1,6 @@
 .user_list_main {
     background-color: #f4f4f4;
-    height: calc(100vh);
+    height: 100vh;
     padding: 2rem;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
@@ -9,6 +9,11 @@
 }
 .user_details{
     margin: 0 0;
+}
+
+.details_text p, h2,h1{
+    text-align: left;
+    text-overflow: ellipsis;
 }
 .button{
     margin: 2rem 0;
@@ -33,7 +38,7 @@
 }
 
 .repo_card {
-    width: 22rem;
+    width: 25rem;
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 0.75rem;
@@ -41,6 +46,7 @@
     padding: 1.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    display: flex;
 }
 
 .repo_card:hover {
@@ -50,7 +56,8 @@
 
 .repo_card h2 {
     margin: 0 0 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    text-overflow: ellipsis;
     color: #007bff;
     font-weight: bold;
 }

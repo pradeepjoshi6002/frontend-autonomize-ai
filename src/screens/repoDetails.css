@@ -1,53 +1,59 @@
 .repository-details {
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 1rem;
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 40rem;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 50rem;
+  font-family: "Roboto", sans-serif;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+.avatar_img_1 {
+  border-radius: 50%;
+  width: 15rem;
 }
 
 .repository-details h1 {
-    font-size: 2rem;
-    color: #007bff;
-    margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 1rem;
 }
 
 .repository-details p {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    line-height: 1.5;
-    color: #555;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  color: #555;
 }
 
 .extra-details {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .extra-details p {
-    font-size: 0.95rem;
-    color: #444;
+  font-size: 0.95rem;
+  color: #444;
 }
 
 @media (max-width: 768px) {
-    .repository-details {
-        padding: 1rem;
-        margin: 1rem;
-    }
+  .repository-details {
+    padding: 1rem;
+    margin: 1rem;
+  }
 
-    .repository-details h1 {
-        font-size: 1.5rem;
-    }
+  .repository-details h1 {
+    font-size: 1.5rem;
+  }
 
-    .extra-details p {
-        font-size: 0.9rem;
-    }
+  .extra-details p {
+    font-size: 0.9rem;
+  }
 }
